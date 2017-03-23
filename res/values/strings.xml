@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">TemperatureApp</string>
+    <string name="acstate">A/C State</string>
+    <string name="historicaldata">Historical Data</string>
+    <string name="airtemperature">Air Temperature</string>
+    <string name="save">Save</string>
+    <string name="getlast">Get Last</string>
+    <string name="acpower">Power</string>
+    <string name="level">Level:</string>
+    <string name="levelPlus">+</string>
+    <string name="levelMinus">-</string>
+    <string name="temperature">Temperature: </string>
+    <string-array name="spinner_array">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+</resources>
