@@ -3,7 +3,27 @@ package com.appstudio.mrodrigues.temperatureapp;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ACStateActivity extends AppCompatActivity {
 
@@ -30,5 +50,71 @@ public class ACStateActivity extends AppCompatActivity {
     // -- subtração de 0.5 graus
     public void subtraiMeioGrau(View v) {
         displayAC(-0.5);
+    }
+
+    public void save(View v){
+        String url = "https://marcorodrigues191.000webhostapp.com/ws_insert.php";
+        JSONObject jsonBody = new JSONObject();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonoutput = new JSONObject(response);
+                    //((TextView) findViewById(R.id.textTemp)).setText(jsonoutput.getString(Utils.param_status));
+                } catch(JSONException ex) {}
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        }){
+            @Override
+            protected Map<String,String> getParams(){
+                Spinner mySpinner=(Spinner) findViewById(R.id.spinner);
+                String level_str = mySpinner.getSelectedItem().toString();
+                TextView myText = (TextView)findViewById(R.id.tempNr);
+                String degree_str = myText.getText().toString();
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("level", level_str);
+                params.put("degree",degree_str);
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String,String> params = new HashMap<String, String>();
+                params.put("Content-Type","application/x-www-form-urlencoded");
+                return params;
+            }
+        };
+
+        // Access the RequestQueue through your singleton class.
+        MySingleton.getInstance(this).addToRequestQueue(stringRequest);
+    }
+
+    public void getlast(View v){
+        String url = "https://marcorodrigues191.000webhostapp.com/ws_get.php";
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            ((TextView) findViewById(R.id.textTemp)).setText(response.getString(Utils.param_level));
+                        } catch(JSONException ex){}
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        ((TextView) findViewById(R.id.textTemp)).setText(Utils.output_erro);
+                    }
+                });
+
+        // Access the RequestQueue through your singleton class.
+        MySingleton.getInstance(this).addToRequestQueue(jsObjRequest);
     }
 }

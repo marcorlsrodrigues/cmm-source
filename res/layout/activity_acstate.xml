@@ -27,6 +27,7 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:onClick="save"
             android:text="@string/save"/>
 
         <Button
@@ -34,7 +35,8 @@
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/getlast"/>
+            android:text="@string/getlast"
+            android:onClick="getlast"/>
 
     </LinearLayout>
 <LinearLayout

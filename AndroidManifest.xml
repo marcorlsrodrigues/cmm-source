@@ -19,5 +19,5 @@
         <activity android:name=".ACStateActivity" />
         <activity android:name=".HistoricalDataActivity"></activity>
     </application>
-
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
