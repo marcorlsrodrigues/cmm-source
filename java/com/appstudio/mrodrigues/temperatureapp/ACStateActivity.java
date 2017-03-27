@@ -2,9 +2,11 @@ package com.appstudio.mrodrigues.temperatureapp;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -18,6 +20,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -103,14 +106,25 @@ public class ACStateActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            ((TextView) findViewById(R.id.textTemp)).setText(response.getString(Utils.param_level));
+                            JSONArray arr = response.getJSONArray(Utils.param_dados);
+                            String level = "";
+                            String date = "";
+                            String temperature = "";
+                            for (int i = 0; i < arr.length(); i++) {
+                                JSONObject obj = arr.getJSONObject(i);
+                                level = obj.getString("level");
+                                date = obj.getString("date");
+                                temperature = obj.getString("temperature");
+                            }
+                            ((TextView) findViewById(R.id.tempNr)).setText(temperature);
+                            ((Spinner)findViewById(R.id.spinner)).setSelection(Integer.parseInt(level)-1);
                         } catch(JSONException ex){}
                     }
                 }, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        ((TextView) findViewById(R.id.textTemp)).setText(Utils.output_erro);
+                        ((TextView) findViewById(R.id.textTemp)).setText(error.getMessage());
                     }
                 });
 
