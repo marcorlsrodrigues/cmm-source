@@ -1,5 +1,8 @@
 package com.appstudio.mrodrigues.temperatureapp;
 
+import android.content.ContentValues;
+import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -19,21 +22,34 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.appstudio.mrodrigues.temperatureapp.db.AndroidDatabaseManager;
+import com.appstudio.mrodrigues.temperatureapp.db.Contrato;
+import com.appstudio.mrodrigues.temperatureapp.db.DB;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.content.Context;
+
 public class ACStateActivity extends AppCompatActivity {
+
+
+    // Gets the data repository in write mode
+    SQLiteDatabase db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_acstate);
+        DB mDbHelper = new DB(getApplicationContext());
+        db =  mDbHelper.getWritableDatabase();
     }
 
     // -- display do AC
@@ -130,5 +146,21 @@ public class ACStateActivity extends AppCompatActivity {
 
         // Access the RequestQueue through your singleton class.
         MySingleton.getInstance(this).addToRequestQueue(jsObjRequest);
+    }
+
+    public void savelocal(View v){
+        String currentDateTimeString = DateFormat.getDateTimeInstance().format(new Date());
+        Spinner mySpinner=(Spinner) findViewById(R.id.spinner);
+        String level_str = mySpinner.getSelectedItem().toString();
+        TextView myText = (TextView)findViewById(R.id.tempNr);
+        String degree_str = myText.getText().toString();
+        ContentValues cv = new ContentValues();
+        cv.put(Contrato.Registo.COLUMN_DEVICEID,1);
+        cv.put(Contrato.Registo.COLUMN_DATE,currentDateTimeString);
+        cv.put(Contrato.Registo.COLUMN_LEVEL,level_str);
+        cv.put(Contrato.Registo.COLUMN_TEMPERATURE,degree_str);
+        db.insert(Contrato.Registo.TABLE_NAME,null,cv);
+        Intent dbmanager = new Intent(this,AndroidDatabaseManager.class);
+        startActivity(dbmanager);
     }
 }

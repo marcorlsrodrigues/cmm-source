@@ -18,6 +18,7 @@
         </activity>
         <activity android:name=".ACStateActivity" />
         <activity android:name=".HistoricalDataActivity"></activity>
+        <activity android:name=".db.AndroidDatabaseManager"></activity>
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
 </manifest>

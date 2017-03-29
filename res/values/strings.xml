@@ -3,8 +3,9 @@
     <string name="acstate">A/C State</string>
     <string name="historicaldata">Historical Data</string>
     <string name="airtemperature">Air Temperature</string>
-    <string name="save">Save</string>
-    <string name="getlast">Get Last</string>
+    <string name="save">Save Remote</string>
+    <string name="savelocal">Save Local</string>
+    <string name="getlast">Get Remote</string>
     <string name="acpower">Power</string>
     <string name="level">Level:</string>
     <string name="levelPlus">+</string>
