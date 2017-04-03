@@ -10,11 +10,13 @@ public class Registo {
     public String date;
     public String degree;
     public int level;
+    public int power;
 
-    public Registo(String date,String degree, int level){
+    public Registo(String date,String degree, int level,int power){
         this.date = date;
         this.degree = degree;
         this.level = level;
+        this.power = power;
     }
 
     public String getDate(){
@@ -27,5 +29,9 @@ public class Registo {
 
     public int getLevel() {
         return level;
+    }
+
+    public int getPower() {
+        return power;
     }
 }

@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
@@ -15,20 +16,24 @@ import java.util.ArrayList;
  */
 
 public class DB extends SQLiteOpenHelper {
-    public static final int DATABASE_VERSION = 1;
+    public static final int DATABASE_VERSION = 3;
     public static final String DATABASE_NAME = "cmm.db";
 
     public DB(Context context){super(context,DATABASE_NAME,null,DATABASE_VERSION);}
 
     public void onCreate(SQLiteDatabase db){
         db.execSQL(Contrato.Registo.SQL_CREATE_ENTRIES);
-        db.execSQL("insert into "+ Contrato.Registo.TABLE_NAME + " values (1,1,'30',2,'2017-03-29 12:18:00');");
-        db.execSQL("insert into "+ Contrato.Registo.TABLE_NAME + " values (2,1,'29',1,'2017-03-29 12:19:00');");
-        db.execSQL("insert into "+ Contrato.Registo.TABLE_NAME + " values (3,1,'25',3,'2017-03-29 12:21:00');");
+        db.execSQL("insert into "+ Contrato.Registo.TABLE_NAME + " values (1,1,'30',2,'2017-03-29 12:18:00',1);");
+        db.execSQL("insert into "+ Contrato.Registo.TABLE_NAME + " values (2,1,'29',1,'2017-03-29 12:19:00',1);");
+        db.execSQL("insert into "+ Contrato.Registo.TABLE_NAME + " values (3,1,'25',3,'2017-03-29 12:21:00',1);");
     }
 
     public void onUpgrade(SQLiteDatabase db,int oldVersion,int newVersion){
-        db.execSQL(Contrato.Registo.SQL_DROP_ENTRIES);
+        try {
+            db.execSQL(Contrato.Registo.SQL_DROP_ENTRIES);
+        }catch (SQLiteException ex){
+            Log.d("SQLiteException",ex.getMessage());
+        }
     }
 
     public void onDowngrade(SQLiteDatabase db,int oldVersion,int newVersion){
@@ -52,14 +57,11 @@ public class DB extends SQLiteOpenHelper {
             //execute the query results will be save in Cursor c
             Cursor c = sqlDB.rawQuery(maxQuery, null);
 
-
             //add value to cursor2
             Cursor2.addRow(new Object[] { "Success" });
 
             alc.set(1,Cursor2);
             if (null != c && c.getCount() > 0) {
-
-
                 alc.set(0,c);
                 c.moveToFirst();
 

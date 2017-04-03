@@ -94,7 +94,7 @@
             android:id="@+id/tempNr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="30"
+            android:text="30.0"
             android:textColor="@android:color/black"
             android:textSize="26sp"
             android:layout_marginLeft="15dp"

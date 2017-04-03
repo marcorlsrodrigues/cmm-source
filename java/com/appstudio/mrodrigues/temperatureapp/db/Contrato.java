@@ -18,15 +18,17 @@ public class Contrato {
         public static final String COLUMN_TEMPERATURE = "temperature";
         public static final String COLUMN_LEVEL = "level";
         public static final String COLUMN_DATE = "date";
+        public static final String COLUMN_POWER = "power";
 
-        public static final String[] PROJECTION = {Registo._ID,Registo.COLUMN_DEVICEID,Registo.COLUMN_TEMPERATURE,Registo.COLUMN_LEVEL,Registo.COLUMN_DATE};
+        public static final String[] PROJECTION = {Registo._ID,Registo.COLUMN_DEVICEID,Registo.COLUMN_TEMPERATURE,Registo.COLUMN_LEVEL,Registo.COLUMN_DATE,Registo.COLUMN_POWER};
 
         public static final String SQL_CREATE_ENTRIES =
                 "CREATE TABLE " + Registo.TABLE_NAME + "(" + Registo._ID + " " + INT_TYPE + " PRIMARY KEY, " +
                         Registo.COLUMN_DEVICEID+ " "  + INT_TYPE + ","+
                         Registo.COLUMN_TEMPERATURE+ " "  + TEXT_TYPE + ","+
                         Registo.COLUMN_LEVEL+ " "   + INT_TYPE + ","+
-                        Registo.COLUMN_DATE + " "    + TEXT_TYPE + ");";
+                        Registo.COLUMN_DATE + " "    + TEXT_TYPE + ","+
+                        Registo.COLUMN_POWER + " "    + TEXT_TYPE + ");";
 
         public static final String SQL_DROP_ENTRIES =
                 "DROP TABLE " + Registo.TABLE_NAME + ";";
