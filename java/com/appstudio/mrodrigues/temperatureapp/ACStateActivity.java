@@ -99,7 +99,6 @@ public class ACStateActivity extends AppCompatActivity {
                     Log.d("temperatureApp", obj.getString(Utils.param_status));
 
                     if(obj.getString(Utils.param_status).equals("OK")){
-                        Log.d("tag", "if equals");
                         saveLocalDb();
                     }else{
                         getLastLocalDb();
