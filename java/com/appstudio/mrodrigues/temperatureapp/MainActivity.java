@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (lightSensor == null){
             Toast.makeText(MainActivity.this,
-                    "No Light Sensor! quit-",
+                    "No Light Sensor!",
                     Toast.LENGTH_LONG).show();
         }
 

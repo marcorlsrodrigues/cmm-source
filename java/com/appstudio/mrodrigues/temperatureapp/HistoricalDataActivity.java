@@ -30,11 +30,6 @@ public class HistoricalDataActivity extends AppCompatActivity {
     private void fillListview(){
         ArrayList<Registo> arrayItems = new ArrayList<>();
         arrayItems = getLocalRecords();
-        /*arrayItems.add(new Registo("2017-03-23 10:00:00","26.5",3));
-        arrayItems.add(new Registo("2017-03-22 10:00:00","27.5",2));
-        arrayItems.add(new Registo("2017-03-21 10:00:00","23.0",1));
-        arrayItems.add(new Registo("2017-03-20 10:00:00","24.5",3));
-        arrayItems.add(new Registo("2017-03-19 10:00:00","21.0",2));*/
 
         CustomArrayAdapter itemsAdapter = new CustomArrayAdapter(this,arrayItems);
 

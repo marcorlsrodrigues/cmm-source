@@ -36,14 +36,14 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:onClick="save"
-            android:text="@string/save"/>
+            android:text="@string/save_remote"/>
 
         <Button
             android:id="@+id/btnACGetLast"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/getlast"
+            android:text="@string/get_remote"
             android:onClick="getlast"/>
 
     </LinearLayout>
@@ -71,6 +71,7 @@
         android:layout_marginLeft="14dp"
         android:layout_marginStart="14dp"
         android:layout_marginBottom="12dp"
+
         android:entries="@array/spinner_array"/>
 </LinearLayout>
     <LinearLayout

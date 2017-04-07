@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TemperatureApp</string>
+    <string name="app_name">A/C Control</string>
     <string name="acstate">A/C State</string>
     <string name="historicaldata">Historical Data</string>
     <string name="airtemperature">Air Temperature</string>
@@ -11,6 +11,10 @@
     <string name="levelPlus">+</string>
     <string name="levelMinus">-</string>
     <string name="temperature">Temperature: </string>
+    <string name="save_remote">Save Remote</string>
+    <string name="get_remote">Get Remote</string>
+    <string name="save_local">Save Local</string>
+    <string name="saved_successfully">Saved Successfully!</string>
     <string-array name="spinner_array">
         <item>1</item>
         <item>2</item>

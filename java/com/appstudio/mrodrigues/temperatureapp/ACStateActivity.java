@@ -96,10 +96,11 @@ public class ACStateActivity extends AppCompatActivity {
                 try {
                     JSONObject obj = new JSONObject(response);
 
-                    Log.d("temperatureApp", obj.getString(Utils.param_status));
-
-                    if(obj.getString(Utils.param_status).equals("OK")){
+                    if(obj.getString(Utils.param_status).equals(Utils.output_ok)){
                         saveLocalDb();
+                        Toast.makeText(ACStateActivity.this,
+                                "Saved Successfully!",
+                                Toast.LENGTH_LONG).show();
                     }else{
                         getLastLocalDb();
                     }
@@ -161,10 +162,13 @@ public class ACStateActivity extends AppCompatActivity {
                             String level = "";
                             String power = "";
                             String temperature = "";
+                            Double temp = 0.0;
                             for (int i = 0; i < arr.length(); i++) {
                                 JSONObject obj = arr.getJSONObject(i);
                                 level = obj.getString("level");
                                 temperature = obj.getString("temperature");
+                                temp = Double.parseDouble(temperature);
+                                temperature = String.format("%.1f",temp);
                                 power = obj.getString("power");
                             }
                             ((TextView) findViewById(R.id.tempNr)).setText(temperature);
@@ -203,8 +207,10 @@ public class ACStateActivity extends AppCompatActivity {
         String level_str = mySpinner.getSelectedItem().toString();
         TextView myText = (TextView)findViewById(R.id.tempNr);
         String degree_str = myText.getText().toString();
+
         Switch s = (Switch) findViewById(R.id.switch1);
         String power_str  = "";
+
         if(s.isChecked()){
             power_str = "1";
         }else{
@@ -221,8 +227,8 @@ public class ACStateActivity extends AppCompatActivity {
         db.insert(Contrato.Registo.TABLE_NAME,null,cv);
 
         //inicia AndroidDatabaseManager
-        Intent dbmanager = new Intent(this,AndroidDatabaseManager.class);
-        startActivity(dbmanager);
+        /*Intent dbmanager = new Intent(this,AndroidDatabaseManager.class);
+        startActivity(dbmanager);*/
     }
 
     public void saveLocalDb(){
@@ -253,9 +259,9 @@ public class ACStateActivity extends AppCompatActivity {
             db.insert(Contrato.Registo.TABLE_NAME,null,cv);
             Log.d("tag", "db insert");
             //inicia AndroidDatabaseManager
-            Intent dbmanager = new Intent(this,AndroidDatabaseManager.class);
-            startActivity(dbmanager);
-            Log.d("tag", "start activity");
+            /*Intent dbmanager = new Intent(this,AndroidDatabaseManager.class);
+            startActivity(dbmanager);*/
+            //Log.d("tag", "start activity");
         }catch (Exception ex){
             Log.d("tag", ex.toString());
         }
@@ -274,11 +280,17 @@ public class ACStateActivity extends AppCompatActivity {
                             String level = "";
                             String power = "";
                             String temperature = "";
+                            Double temp = 0.0;
                             for (int i = 0; i < arr.length(); i++) {
                                 JSONObject obj = arr.getJSONObject(i);
                                 level = obj.getString("level");
                                 power = obj.getString("power");
                                 temperature = obj.getString("temperature");
+                                Log.d("String",temperature);
+                                temp = Double.parseDouble(temperature);
+                                Log.d("String",temp.toString());
+                                temperature = String.format("%.1f",temp);
+                                Log.d("String",temperature);
                             }
                             ((TextView) findViewById(R.id.tempNr)).setText(temperature);
                             ((Spinner)findViewById(R.id.spinner)).setSelection(Integer.parseInt(level)-1);
@@ -314,8 +326,11 @@ public class ACStateActivity extends AppCompatActivity {
                     Log.d("temperatureApp", obj.getString(Utils.param_status));
 
                     if(obj.getString(Utils.param_status).equals("OK")){
-                        Log.d("tag", "if equals");
                         saveLocalDb();
+
+                        Toast.makeText(ACStateActivity.this,
+                                "Saved Successfully!",
+                                Toast.LENGTH_LONG).show();
                     }else{
                         getLastLocalDb();
                     }
