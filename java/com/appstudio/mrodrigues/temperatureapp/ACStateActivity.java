@@ -119,6 +119,9 @@ public class ACStateActivity extends AppCompatActivity {
                 Spinner mySpinner=(Spinner) findViewById(R.id.spinner);
                 String level_str = mySpinner.getSelectedItem().toString();
 
+                Spinner mySpinner2=(Spinner) findViewById(R.id.spinnerRoom);
+                String room_str = mySpinner2.getSelectedItem().toString();
+
                 TextView myText = (TextView)findViewById(R.id.tempNr);
                 String degree_str = myText.getText().toString();
 
@@ -134,6 +137,7 @@ public class ACStateActivity extends AppCompatActivity {
                 params.put("level", level_str);
                 params.put("degree",degree_str);
                 params.put("power",power_str);
+                params.put("device_id",room_str);
                 return params;
             }
 
@@ -159,13 +163,14 @@ public class ACStateActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             JSONArray arr = response.getJSONArray(Utils.param_dados);
-                            String level = "";
+                            String level = "",room="";
                             String power = "";
                             String temperature = "";
                             Double temp = 0.0;
                             for (int i = 0; i < arr.length(); i++) {
                                 JSONObject obj = arr.getJSONObject(i);
                                 level = obj.getString("level");
+                                room = obj.getString("device_id");
                                 temperature = obj.getString("temperature");
                                 temp = Double.parseDouble(temperature);
                                 temperature = String.format("%.1f",temp);
@@ -173,6 +178,7 @@ public class ACStateActivity extends AppCompatActivity {
                             }
                             ((TextView) findViewById(R.id.tempNr)).setText(temperature);
                             ((Spinner)findViewById(R.id.spinner)).setSelection(Integer.parseInt(level)-1);
+                            ((Spinner)findViewById(R.id.spinnerRoom)).setSelection(Integer.parseInt(room)-1);
                             sw.setOnCheckedChangeListener(null);
                             if(power.equals("1")){
                                 ((Switch)findViewById(R.id.switch1)).setChecked(true);
@@ -205,6 +211,8 @@ public class ACStateActivity extends AppCompatActivity {
         String strDate = sdf.format(c.getTime());
         Spinner mySpinner=(Spinner) findViewById(R.id.spinner);
         String level_str = mySpinner.getSelectedItem().toString();
+        Spinner mySpinner2=(Spinner) findViewById(R.id.spinnerRoom);
+        String room_str = mySpinner2.getSelectedItem().toString();
         TextView myText = (TextView)findViewById(R.id.tempNr);
         String degree_str = myText.getText().toString();
 
@@ -218,7 +226,7 @@ public class ACStateActivity extends AppCompatActivity {
         }
 
         ContentValues cv = new ContentValues();
-        cv.put(Contrato.Registo.COLUMN_DEVICEID,1);
+        cv.put(Contrato.Registo.COLUMN_DEVICEID,room_str);
         cv.put(Contrato.Registo.COLUMN_DATE,strDate);
         cv.put(Contrato.Registo.COLUMN_LEVEL,level_str);
         cv.put(Contrato.Registo.COLUMN_TEMPERATURE,degree_str);
@@ -239,6 +247,8 @@ public class ACStateActivity extends AppCompatActivity {
             String strDate = sdf.format(c.getTime());
             Spinner mySpinner=(Spinner) findViewById(R.id.spinner);
             String level_str = mySpinner.getSelectedItem().toString();
+            Spinner mySpinner2=(Spinner) findViewById(R.id.spinnerRoom);
+            String room_str = mySpinner2.getSelectedItem().toString();
             TextView myText = (TextView)findViewById(R.id.tempNr);
             String degree_str = myText.getText().toString();
             Switch s = (Switch) findViewById(R.id.switch1);
@@ -250,7 +260,7 @@ public class ACStateActivity extends AppCompatActivity {
             }
 
             ContentValues cv = new ContentValues();
-            cv.put(Contrato.Registo.COLUMN_DEVICEID,1);
+            cv.put(Contrato.Registo.COLUMN_DEVICEID,room_str);
             cv.put(Contrato.Registo.COLUMN_DATE,strDate);
             cv.put(Contrato.Registo.COLUMN_LEVEL,level_str);
             cv.put(Contrato.Registo.COLUMN_TEMPERATURE,degree_str);
@@ -277,23 +287,22 @@ public class ACStateActivity extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             JSONArray arr = response.getJSONArray(Utils.param_dados);
-                            String level = "";
+                            String level = "",room="";
                             String power = "";
                             String temperature = "";
                             Double temp = 0.0;
                             for (int i = 0; i < arr.length(); i++) {
                                 JSONObject obj = arr.getJSONObject(i);
                                 level = obj.getString("level");
+                                room = obj.getString("device_id");
                                 power = obj.getString("power");
                                 temperature = obj.getString("temperature");
-                                Log.d("String",temperature);
                                 temp = Double.parseDouble(temperature);
-                                Log.d("String",temp.toString());
                                 temperature = String.format("%.1f",temp);
-                                Log.d("String",temperature);
                             }
                             ((TextView) findViewById(R.id.tempNr)).setText(temperature);
                             ((Spinner)findViewById(R.id.spinner)).setSelection(Integer.parseInt(level)-1);
+                            ((Spinner)findViewById(R.id.spinnerRoom)).setSelection(Integer.parseInt(room)-1);
                             if(power.equals("1")){
                                 ((Switch)findViewById(R.id.switch1)).setChecked(true);
                             }else{
@@ -323,8 +332,6 @@ public class ACStateActivity extends AppCompatActivity {
                 try {
                     JSONObject obj = new JSONObject(response);
 
-                    Log.d("temperatureApp", obj.getString(Utils.param_status));
-
                     if(obj.getString(Utils.param_status).equals("OK")){
                         saveLocalDb();
 
@@ -349,6 +356,9 @@ public class ACStateActivity extends AppCompatActivity {
                 Spinner mySpinner=(Spinner) findViewById(R.id.spinner);
                 String level_str = mySpinner.getSelectedItem().toString();
 
+                Spinner mySpinner2=(Spinner) findViewById(R.id.spinnerRoom);
+                String room_str = mySpinner2.getSelectedItem().toString();
+
                 TextView myText = (TextView)findViewById(R.id.tempNr);
                 String degree_str = myText.getText().toString();
 
@@ -364,6 +374,7 @@ public class ACStateActivity extends AppCompatActivity {
                 params.put("level", level_str);
                 params.put("degree",degree_str);
                 params.put("power",power_str);
+                params.put("device_id",room_str);
                 return params;
             }
 

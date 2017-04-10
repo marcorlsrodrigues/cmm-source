@@ -42,7 +42,7 @@ public class HistoricalDataActivity extends AppCompatActivity {
         Cursor c = db.rawQuery(query,null);
         if(c.moveToFirst()){
             do{
-                Registo r = new Registo(c.getString(3),c.getString(1),c.getInt(2),c.getInt(4));
+                Registo r = new Registo(c.getString(3),c.getString(1),c.getInt(2),c.getInt(4),c.getInt(0));
                 array.add(r);
             }while(c.moveToNext());
         }

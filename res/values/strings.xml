@@ -15,6 +15,7 @@
     <string name="get_remote">Get Remote</string>
     <string name="save_local">Save Local</string>
     <string name="saved_successfully">Saved Successfully!</string>
+    <string name="room">Room</string>
     <string-array name="spinner_array">
         <item>1</item>
         <item>2</item>
