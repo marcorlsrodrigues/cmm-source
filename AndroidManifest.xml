@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.appstudio.mrodrigues.temperatureapp">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -17,8 +19,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".ACStateActivity" />
-        <activity android:name=".HistoricalDataActivity"></activity>
-        <activity android:name=".db.AndroidDatabaseManager"></activity>
+        <activity android:name=".HistoricalDataActivity" />
+        <activity android:name=".db.AndroidDatabaseManager" />
+        <activity android:name=".About"></activity>
     </application>
-    <uses-permission android:name="android.permission.INTERNET" />
+
 </manifest>
