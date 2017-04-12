@@ -10,8 +10,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:id="@+id/textview_text1"
-    android:text="A/C Control is an android app that provides you the following awesome features:
-    ">
+    android:text="A/C Control is an android app that provides you the following awesome features:">
     </TextView>
     <TextView
         android:layout_width="match_parent"

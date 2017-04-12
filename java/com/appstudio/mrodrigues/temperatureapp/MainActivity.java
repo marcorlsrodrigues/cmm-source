@@ -48,6 +48,24 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
     }
 
+    public void btnAbout(View v){
+        Intent i = new Intent(MainActivity.this,About.class);
+        startActivity(i);
+    }
+
+    public void btnExit(View v){
+        new AlertDialog.Builder(this)
+                .setTitle("Exit")
+                .setMessage("Do you really want to quit this app?")
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        finish();
+                    }})
+                .setNegativeButton(android.R.string.no, null).show();
+    }
+
 
     SensorEventListener lightSensorEventListener
             = new SensorEventListener(){
@@ -64,15 +82,6 @@ public class MainActivity extends AppCompatActivity {
             if(event.sensor.getType()==Sensor.TYPE_LIGHT){
                 final float currentReading = event.values[0];
                 ((TextView) findViewById(R.id.textTemp)).setText(String.valueOf(currentReading));
-                ((Button) findViewById(R.id.btnSensor)).setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View v) {
-                        // TODO Auto-generated method stub
-                        ((TextView) findViewById(R.id.textTemp)).setText(String.valueOf(currentReading));
-                    }
-                });
-
             }
         }
 

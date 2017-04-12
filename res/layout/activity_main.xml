@@ -10,13 +10,24 @@
 
 <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+        <Button
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="About"
+            android:onClick="btnAbout"
+            android:id="@+id/btnAbout"/>
     <Button
-        android:layout_width="match_parent"
+        android:id="@+id/btnExit"
+        android:layout_weight="1"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Turn On Sensor"
-        android:id="@+id/btnSensor"
-        android:visibility="invisible"/>
+        android:text="Exit"
+        android:onClick="btnExit"/>
+
 </LinearLayout>
 
     <TextView
