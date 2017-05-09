@@ -25,6 +25,7 @@ public class CustomArrayAdapter extends ArrayAdapter<Registo> {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.layout_linha,parent,false);
         }
         ((TextView)convertView.findViewById(R.id.date)).setText(r.getDate());
+        ((TextView)convertView.findViewById(R.id.room_layout)).setText(Integer.toString(r.getDeviceId()));
         ((TextView)convertView.findViewById(R.id.degree)).setText(r.getDegree());
         ((TextView)convertView.findViewById(R.id.level)).setText(Integer.toString(r.getLevel()));
         ((TextView)convertView.findViewById(R.id.power)).setText(Integer.toString(r.getPower()));

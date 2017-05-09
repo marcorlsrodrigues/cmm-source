@@ -2,7 +2,9 @@ package com.appstudio.mrodrigues.temperatureapp;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.BoolRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -50,7 +52,8 @@ public class ACStateActivity extends AppCompatActivity {
     // Gets the data repository in write mode
     SQLiteDatabase db;
     Switch sw;
-
+    Boolean _OnCreate = true;
+    Boolean _switchGet = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,7 +61,7 @@ public class ACStateActivity extends AppCompatActivity {
         DB mDbHelper = new DB(getApplicationContext());
         db =  mDbHelper.getWritableDatabase();
         sw = (Switch)findViewById(R.id.switch1);
-
+        _OnCreate = true;
         sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -66,6 +69,14 @@ public class ACStateActivity extends AppCompatActivity {
             }
         });
     }
+
+    @Override
+    protected void onResume()
+    {
+        super.onResume();
+        _OnCreate = false;
+    }
+
 
     // -- display do AC
     public void displayAC(double newvalue) {
@@ -101,6 +112,8 @@ public class ACStateActivity extends AppCompatActivity {
                         Toast.makeText(ACStateActivity.this,
                                 "Saved Successfully!",
                                 Toast.LENGTH_LONG).show();
+
+                        getRPi();
                     }else{
                         getLastLocalDb();
                     }
@@ -112,6 +125,10 @@ public class ACStateActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.d("Error",error.getMessage());
+                Toast.makeText(ACStateActivity.this,
+                        "Check you internet connection!",
+                        Toast.LENGTH_LONG).show();
             }
         }){
             @Override
@@ -153,6 +170,28 @@ public class ACStateActivity extends AppCompatActivity {
         MySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 
+    public void getRPi()
+    {
+        String urlRPi = "http://192.168.1.69:5000/light";
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, urlRPi, null, new Response.Listener<JSONObject>() {
+
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        ;
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Error Pi",error.getMessage());
+                    }
+                });
+        // Access the RequestQueue through your singleton class.
+        MySingleton.getInstance(this).addToRequestQueue(jsObjRequest);
+    }
+
     public void getlast(View v){
         String url = "https://marcorodrigues191.000webhostapp.com/ws_get.php";
 
@@ -176,7 +215,7 @@ public class ACStateActivity extends AppCompatActivity {
                                 temperature = String.format("%.1f",temp);
                                 power = obj.getString("power");
                             }
-                            ((TextView) findViewById(R.id.tempNr)).setText(temperature);
+                            ((TextView) findViewById(R.id.tempNr)).setText(temp.toString());
                             ((Spinner)findViewById(R.id.spinner)).setSelection(Integer.parseInt(level)-1);
                             ((Spinner)findViewById(R.id.spinnerRoom)).setSelection(Integer.parseInt(room)-1);
                             sw.setOnCheckedChangeListener(null);
@@ -185,19 +224,24 @@ public class ACStateActivity extends AppCompatActivity {
                             }else{
                                 ((Switch)findViewById(R.id.switch1)).setChecked(false);
                             }
+                            _OnCreate=true;
                             sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                                 @Override
                                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                                     slideSwitch();
                                 }
                             });
+                            _OnCreate = false;
                         } catch(JSONException ex){}
                     }
                 }, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        ((TextView) findViewById(R.id.textTemp)).setText(error.getMessage());
+                        Log.d("Error",error.getMessage());
+                        Toast.makeText(ACStateActivity.this,
+                                "Check you internet connection!",
+                                Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -323,6 +367,7 @@ public class ACStateActivity extends AppCompatActivity {
     }
 
     private void slideSwitch(){
+        if(_OnCreate) return;
         String url = "https://marcorodrigues191.000webhostapp.com/ws_insert.php";
         JSONObject jsonBody = new JSONObject();
 
@@ -338,6 +383,8 @@ public class ACStateActivity extends AppCompatActivity {
                         Toast.makeText(ACStateActivity.this,
                                 "Saved Successfully!",
                                 Toast.LENGTH_LONG).show();
+
+                        getRPi();
                     }else{
                         getLastLocalDb();
                     }
@@ -349,6 +396,10 @@ public class ACStateActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.d("Error",error.getMessage());
+                Toast.makeText(ACStateActivity.this,
+                        "Check you internet connection!",
+                        Toast.LENGTH_LONG).show();
             }
         }){
             @Override

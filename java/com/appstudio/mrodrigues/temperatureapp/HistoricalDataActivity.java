@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.constraint.solver.ArrayLinkedVariables;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -24,7 +25,11 @@ public class HistoricalDataActivity extends AppCompatActivity {
         setContentView(R.layout.activity_historical_data);
         DB mDbHelper = new DB(getApplicationContext());
         db =  mDbHelper.getWritableDatabase();
-        fillListview();
+        try {
+            fillListview();
+        }catch (Exception e){
+            Log.d("Historical Activity", e.getMessage());
+        }
     }
 
     private void fillListview(){

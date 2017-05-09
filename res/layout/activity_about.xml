@@ -124,7 +124,18 @@
                 android:background="@null"
                 />
         </LinearLayout>
-
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Icons downloaded from https://icons8.com"
+        android:layout_marginTop="16dp"
+        android:layout_marginLeft="16dp"
+        android:id="@+id/textview_text11">
+    </TextView>
+</LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>
