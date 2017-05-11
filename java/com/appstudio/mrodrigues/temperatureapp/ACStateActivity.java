@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -113,7 +114,10 @@ public class ACStateActivity extends AppCompatActivity {
                                 "Saved Successfully!",
                                 Toast.LENGTH_LONG).show();
 
-                        getRPi();
+                        Spinner mySpinner2=(Spinner) findViewById(R.id.spinnerRoom);
+                        String room_str = mySpinner2.getSelectedItem().toString();
+
+                        getRPi(room_str);
                     }else{
                         getLastLocalDb();
                     }
@@ -170,24 +174,35 @@ public class ACStateActivity extends AppCompatActivity {
         MySingleton.getInstance(this).addToRequestQueue(stringRequest);
     }
 
-    public void getRPi()
+    public void getRPi(String room)
     {
-        String urlRPi = "http://192.168.1.69:5000/light";
+        String urlRPi = "http://192.168.1.69:5000/lightled/"+room;
 
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, urlRPi, null, new Response.Listener<JSONObject>() {
+        StringRequest jsObjRequest = new StringRequest
+                (Request.Method.GET, urlRPi, new Response.Listener<String>() {
 
                     @Override
-                    public void onResponse(JSONObject response) {
-                        ;
+                    public void onResponse(String response) {
+                        Toast.makeText(ACStateActivity.this,
+                                response.toString(),
+                                Toast.LENGTH_LONG).show();
                     }
                 }, new Response.ErrorListener() {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.d("Error Pi",error.getMessage());
+                        Toast.makeText(ACStateActivity.this,
+                                error.getMessage(),
+                                Toast.LENGTH_LONG).show();
                     }
                 });
+
+        jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(
+                9000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+
         // Access the RequestQueue through your singleton class.
         MySingleton.getInstance(this).addToRequestQueue(jsObjRequest);
     }
@@ -384,7 +399,9 @@ public class ACStateActivity extends AppCompatActivity {
                                 "Saved Successfully!",
                                 Toast.LENGTH_LONG).show();
 
-                        getRPi();
+                        Spinner mySpinner2=(Spinner) findViewById(R.id.spinnerRoom);
+                        String room_str = mySpinner2.getSelectedItem().toString();
+                        getRPi(room_str);
                     }else{
                         getLastLocalDb();
                     }
