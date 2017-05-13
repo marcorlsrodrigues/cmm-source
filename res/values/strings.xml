@@ -11,8 +11,8 @@
     <string name="levelPlus">+</string>
     <string name="levelMinus">-</string>
     <string name="temperature">Temperature: </string>
-    <string name="save_remote">Save Remote</string>
-    <string name="get_remote">Get Remote</string>
+    <string name="save_remote">Save</string>
+    <string name="get_remote">Get</string>
     <string name="save_local">Save Local</string>
     <string name="saved_successfully">Saved Successfully!</string>
     <string name="room">Room</string>

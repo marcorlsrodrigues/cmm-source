@@ -54,7 +54,7 @@ public class ACStateActivity extends AppCompatActivity {
     SQLiteDatabase db;
     Switch sw;
     Boolean _OnCreate = true;
-    Boolean _switchGet = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,7 +100,6 @@ public class ACStateActivity extends AppCompatActivity {
 
     public void save(View v){
         String url = "https://marcorodrigues191.000webhostapp.com/ws_insert.php";
-        JSONObject jsonBody = new JSONObject();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -119,7 +118,8 @@ public class ACStateActivity extends AppCompatActivity {
 
                         getRPi(room_str);
                     }else{
-                        getLastLocalDb();
+                        //getLastLocalDb();
+                        ;
                     }
                 } catch(Exception ex) {
                     Log.d("tag", ex.toString());
@@ -403,7 +403,8 @@ public class ACStateActivity extends AppCompatActivity {
                         String room_str = mySpinner2.getSelectedItem().toString();
                         getRPi(room_str);
                     }else{
-                        getLastLocalDb();
+                        //getLastLocalDb();
+                        ;
                     }
                 } catch(Exception ex) {
                     Log.d("tag", ex.toString());
